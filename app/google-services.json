@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "77745378217",
+    "firebase_url": "https://bookwise-fca71-default-rtdb.firebaseio.com",
+    "project_id": "bookwise-fca71",
+    "storage_bucket": "bookwise-fca71.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:77745378217:android:16d9a803c07beb1d0f6ab8",
+        "android_client_info": {
+          "package_name": "com.example.bookwise"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfG2saxqknfdmCL6GECt7YRiQrmjO16RM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
