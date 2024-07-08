@@ -7,7 +7,9 @@
     android:background="@drawable/back01"
     tools:context=".DashboardAdminActivity">
 
+    <!-- toolbar -->
     <RelativeLayout
+        android:id="@+id/toolbarRl"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
         android:background="@drawable/shape_toolbar2">
@@ -39,12 +41,43 @@
             android:layout_height="48dp"
             android:layout_centerVertical="true"
             android:src="@drawable/ic_logout"
-            android:background="@color/transparent"
+            android:background="@color/primaryColor"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="5dp"
             android:contentDescription="Log out"/>
 
     </RelativeLayout>
+
+    <!-- search -->
+    <EditText
+        android:id="@+id/searchEt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbarRl"
+        android:hint="Search"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        android:drawableStart="@drawable/ic_search"
+        android:drawablePadding="5dp"
+        android:padding="10dp"
+        android:background="@drawable/shape_button2"
+        android:textColorHint="@color/secondaryColor"
+        android:drawableTint="@color/primaryColor"
+        android:textColor="@color/secondaryColor"
+
+        android:minWidth="200dp"
+        android:minHeight="48dp"/>
+
+    <!-- categories -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/categoriesRv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/row_category"
+        android:layout_below="@id/searchEt"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_above="@id/bottomLl"/>
 
     <LinearLayout
         android:id="@+id/bottomLl"
@@ -77,7 +110,7 @@
             android:src="@drawable/ic_pdf"
             app:tint="@color/onSecondaryColor"
             app:fabCustomSize="50dp"
-            app:backgroundTint="@color/secondaryColor"
+            app:backgroundTint="@color/primaryColor"
             android:contentDescription="add pdf"/>
 
     </LinearLayout>
