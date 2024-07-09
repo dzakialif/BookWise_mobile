@@ -1,9 +1,11 @@
-package com.example.bookwise;
+package com.example.bookwise.filters;
 
 import android.widget.Filter;
 
+import com.example.bookwise.adapters.AdapterCategory;
+import com.example.bookwise.models.ModelCategory;
+
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class FilterCategory extends Filter {
     //array list in which we want to search

@@ -1,8 +1,9 @@
-package com.example.bookwise;
+package com.example.bookwise.adapters;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.bookwise.PdfListAdminActivity;
+import com.example.bookwise.filters.FilterCategory;
+import com.example.bookwise.models.ModelCategory;
 import com.example.bookwise.databinding.RowCategoryBinding;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -83,6 +87,17 @@ public class AdapterCategory extends RecyclerView.Adapter<AdapterCategory.holder
                             }
                         })
                         .show();
+            }
+        });
+
+        //handle item click, go to pdfListAdminActivity, also pass pdf category and categoryId
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, PdfListAdminActivity.class);
+                intent.putExtra("categoryId", id);
+                intent.putExtra("categoryTitle", category);
+                context.startActivity(intent);
             }
         });
     }

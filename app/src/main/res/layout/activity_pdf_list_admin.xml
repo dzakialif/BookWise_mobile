@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/back01"
+    tools:context=".PdfListAdminActivity">
+
+    <!-- toolbar -->
+    <RelativeLayout
+        android:id="@+id/toolbarRl"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@drawable/shape_toolbar2">
+
+        <!-- back button -->
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/backBtn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_back"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:background="@color/transparent"/>
+
+        <!-- title -->
+        <TextView
+            android:id="@+id/titleTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Books"
+            android:layout_marginTop="8dp"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/poppinssemibold"
+            android:textColor="@color/onSecondaryColor"/>
+
+        <!-- subtile/category of book -->
+        <TextView
+            android:id="@+id/subTitleTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Category"
+            android:textColor="@color/onSecondaryColor"
+            android:fontFamily="@font/poppinsmedium"
+            android:layout_below="@id/titleTv"/>
+
+
+
+    </RelativeLayout>
+
+    <!-- search -->
+    <EditText
+        android:id="@+id/searchEt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbarRl"
+        android:hint="Search"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        android:drawableStart="@drawable/ic_search"
+        android:drawablePadding="5dp"
+        android:padding="10dp"
+        android:background="@drawable/shape_button2"
+        android:textColorHint="@color/secondaryColor"
+        android:drawableTint="@color/primaryColor"
+        android:textColor="@color/secondaryColor"
+        android:minWidth="200dp"
+        android:minHeight="48dp"/>
+
+    <!-- pdf list -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/bookRv"
+        android:layout_width="match_parent"
+        android:layout_below="@id/searchEt"
+        android:layout_margin="10dp"
+        android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/row_pdf_admin"/>
+
+</RelativeLayout>

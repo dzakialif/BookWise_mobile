@@ -1,9 +1,243 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/back01"
     tools:context=".PdfAddActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/backBtn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/transparent"
+        android:contentDescription="Go Back"
+        android:padding="5dp"
+        android:src="@drawable/ic_back"
+        android:tint="@color/secondaryColor" />
+
+    <ImageView
+        android:id="@+id/iconIv"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/logo"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iconIv"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-60dp"
+        android:text="Add New Book!"
+        android:textColor="@color/secondaryColor"
+        android:fontFamily="@font/poppinssemibold"
+        android:textSize="20sp"/>
+
+    <!--Input Title-->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/titleTil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_below="@id/iconIv"
+        app:hintEnabled="false">
+
+        <EditText
+            android:id="@+id/titleEt"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/shape_edittext1"
+            android:drawableStart="@drawable/ic_pdf"
+            android:drawableTint="@color/secondaryColor"
+            android:drawablePadding="10dp"
+            android:hint="Book Title"
+            android:inputType="textPersonName|textCapWords"
+            android:padding="10dp"
+            android:textColor="@color/secondaryColor"
+            android:textColorHint="@color/onSecondaryColor"
+            android:fontFamily="@font/poppinssemibold"
+            android:textSize="15sp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!--Input Description-->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/descriptionTil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_below="@id/titleTil"
+        android:layout_marginTop="5dp"
+        app:hintEnabled="false">
+
+        <EditText
+            android:id="@+id/descriptionEt"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/shape_edittext1"
+            android:drawableStart="@drawable/ic_pdf"
+            android:drawableTint="@color/secondaryColor"
+            android:drawablePadding="10dp"
+            android:hint="Book Description"
+            android:inputType="textMultiLine|textCapSentences"
+            android:padding="10dp"
+            android:textColor="@color/secondaryColor"
+            android:textColorHint="@color/onSecondaryColor"
+            android:fontFamily="@font/poppinssemibold"
+            android:textSize="15sp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!--Pick Category from dialog-->
+    <TextView
+        android:id="@+id/categoryTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/descriptionTil"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/shape_edittext1"
+        android:drawableStart="@drawable/ic_category"
+        android:drawableEnd="@drawable/ic_down"
+        android:drawableTint="@color/secondaryColor"
+        android:drawablePadding="10dp"
+        android:gravity="center_vertical"
+        android:hint="Book Category"
+        android:padding="10dp"
+        android:textColorHint="@color/onSecondaryColor"
+        android:textColor="@color/secondaryColor"
+        android:fontFamily="@font/poppinssemibold"
+        android:textSize="15sp"/>
+
+    <!--Input Author-->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/authorTil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_below="@id/categoryTv"
+        android:layout_marginTop="5dp"
+        app:hintEnabled="false">
+
+        <EditText
+            android:id="@+id/authorEt"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/shape_edittext1"
+            android:drawableStart="@drawable/ic_pdf"
+            android:drawableTint="@color/secondaryColor"
+            android:drawablePadding="10dp"
+            android:hint="Book Author"
+            android:inputType="textPersonName|textCapWords"
+            android:padding="10dp"
+            android:textColor="@color/secondaryColor"
+            android:textColorHint="@color/onSecondaryColor"
+            android:fontFamily="@font/poppinssemibold"
+            android:textSize="15sp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!--Input ISBN-->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/isbnTil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_below="@id/authorTil"
+        android:layout_marginTop="5dp"
+        app:hintEnabled="false">
+
+        <EditText
+            android:id="@+id/isbnEt"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/shape_edittext1"
+            android:drawableStart="@drawable/ic_pdf"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/secondaryColor"
+            android:hint="Book ISBN"
+            android:inputType="textPersonName|textCapWords"
+            android:padding="10dp"
+            android:textColor="@color/secondaryColor"
+            android:textColorHint="@color/onSecondaryColor"
+            android:fontFamily="@font/poppinssemibold"
+            android:textSize="15sp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!--Input Published-->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/publishTil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_below="@id/isbnTil"
+        android:layout_marginTop="5dp"
+        app:hintEnabled="false">
+
+        <EditText
+            android:id="@+id/publishEt"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/shape_edittext1"
+            android:drawableStart="@drawable/ic_pdf"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/secondaryColor"
+            android:hint="Book Published"
+            android:inputType="textPersonName|textCapWords"
+            android:padding="10dp"
+            android:textColor="@color/secondaryColor"
+            android:textColorHint="@color/onSecondaryColor"
+            android:fontFamily="@font/poppinssemibold"
+            android:textSize="15sp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/attachBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/publishTil"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/shape_edittext1"
+        android:drawableStart="@drawable/ic_attach"
+        android:drawablePadding="10dp"
+        android:drawableTint="@color/secondaryColor"
+        android:gravity="center_vertical"
+        android:hint="Choose File"
+        android:padding="10dp"
+        android:textColorHint="@color/onSecondaryColor"
+        android:textColor="@color/secondaryColor"
+        android:fontFamily="@font/poppinssemibold"
+        android:textSize="15sp"/>
+
+
+    <!-- add category button -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/submitBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/shape_button1"
+        android:text="Submit"
+        android:fontFamily="@font/poppinssemibold"
+        android:textColor="@color/onSecondaryColor"
+        android:layout_below="@id/attachBtn"/>
+
+</RelativeLayout>

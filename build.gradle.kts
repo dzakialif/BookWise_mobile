@@ -1,8 +1,8 @@
 buildscript {
     dependencies {
         classpath("com.google.gms:google-services:4.4.2")
-        classpath("com.google.gms:google-services:4.4.0")
-
+        classpath("com.google.gms:google-services:4.3.8")
+        classpath("com.google.android.gms:play-services-maps:+")
     }
 }
 // Top-level build file where you can add configuration options common to all sub-projects/modules.

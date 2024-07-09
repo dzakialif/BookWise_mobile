@@ -2,15 +2,17 @@ package com.example.bookwise;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageButton;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Display;
 import android.view.View;
 
+import com.example.bookwise.adapters.AdapterCategory;
 import com.example.bookwise.databinding.ActivityDashboardAdminBinding;
+import com.example.bookwise.models.ModelCategory;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -95,7 +97,7 @@ public class DashboardAdminActivity extends AppCompatActivity {
         });
 
     }
-    }
+
 
     private void loadCategories() {
         //init arraylist

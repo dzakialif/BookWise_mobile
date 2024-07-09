@@ -65,7 +65,6 @@
         android:textColorHint="@color/secondaryColor"
         android:drawableTint="@color/primaryColor"
         android:textColor="@color/secondaryColor"
-
         android:minWidth="200dp"
         android:minHeight="48dp"/>
 
