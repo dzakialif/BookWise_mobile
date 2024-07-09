@@ -7,7 +7,9 @@
     android:background="@drawable/back01"
     tools:context=".DashboardUserActivity">
 
+    <!-- toolbar -->
     <RelativeLayout
+        android:id="@+id/toolbarRl"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
         android:background="@drawable/shape_toolbar2">
@@ -45,5 +47,26 @@
             android:contentDescription="Log out"/>
 
     </RelativeLayout>
+
+    <!-- tabs -->
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbarRl"
+        android:layout_margin="5dp"
+        android:background="@color/transparent"
+        app:tabBackground="@drawable/tab_selector"
+        app:tabIndicatorFullWidth="false"
+        app:tabIndicatorHeight="0dp"
+        app:tabMode="scrollable"
+        app:tabUnboundedRipple="false"/>
+
+    <!-- viewPager: swipe/show/change fragments -->
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tabLayout"/>
 
 </RelativeLayout>

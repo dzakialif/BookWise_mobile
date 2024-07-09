@@ -41,7 +41,7 @@
             android:layout_height="48dp"
             android:layout_centerVertical="true"
             android:src="@drawable/ic_logout"
-            android:background="@color/primaryColor"
+            android:background="@color/transparent"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="5dp"
             android:contentDescription="Log out"/>
