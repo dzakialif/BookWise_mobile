@@ -34,8 +34,8 @@ public class AdapterPdfUser extends RecyclerView.Adapter<AdapterPdfUser.HolderPd
 
     public AdapterPdfUser(Context context, ArrayList<ModelPdf> pdfArrayList) {
         this.context = context;
-        this.pdfArrayList = pdfArrayList;
-        this.filterList = pdfArrayList;
+        this.pdfArrayList = pdfArrayList != null ? pdfArrayList : new ArrayList<ModelPdf>();
+        this.filterList = pdfArrayList != null ? pdfArrayList : new ArrayList<ModelPdf>();
     }
 
     @NonNull
@@ -71,7 +71,8 @@ public class AdapterPdfUser extends RecyclerView.Adapter<AdapterPdfUser.HolderPd
                 "" + pdfUrl,
                 "" + title,
                 holder.pdfView,
-                holder.progressBar
+                holder.progressBar,
+                null
         );
         MyApplication.loadCategory(
                 "" + categoryId,
@@ -96,18 +97,18 @@ public class AdapterPdfUser extends RecyclerView.Adapter<AdapterPdfUser.HolderPd
 
     @Override
     public int getItemCount() {
-        return pdfArrayList.size(); //return list size || number of records
+        return pdfArrayList != null ? pdfArrayList.size() : 0; //return list size || number of records
     }
 
     @Override
     public Filter getFilter() {
-        if (filter == null){
+        if (filter == null) {
             filter = new FilterPdfUser(filterList, this);
         }
-        return null;
+        return filter;
     }
 
-    class HolderPdfUser extends RecyclerView.ViewHolder{
+    class HolderPdfUser extends RecyclerView.ViewHolder {
 
         TextView titleTv, descriptionTv, categoryTv, sizeTv, dateTv;
         PDFView pdfView;

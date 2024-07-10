@@ -58,8 +58,8 @@
                 <!--book preview-->
                 <RelativeLayout
                     android:id="@+id/pdfRl"
-                    android:layout_width="100dp"
-                    android:layout_height="140dp"
+                    android:layout_width="150dp"
+                    android:layout_height="200dp"
                     android:layout_marginEnd="5dp"
                     android:background="@color/grey">
 
@@ -298,6 +298,32 @@
 
                     </TableRow>
 
+                    <!-- number of pages -->
+                    <TableRow
+                        android:layout_marginTop="5dp">
+
+                        <TextView
+                            android:id="@+id/pagesLabelTv"
+                            style="@style/TextAppearance.MaterialComponents.Caption"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="5dp"
+                            android:textColor="@color/secondaryColor"
+                            android:text="Pages"/>
+
+                        <TextView
+                            android:id="@+id/pagesTv"
+                            style="@style/TextAppearance.MaterialComponents.Caption"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="5dp"
+                            android:textColor="@color/secondaryColor"
+                            android:text="N/A"/>
+
+                    </TableRow>
+
                 </TableLayout>
 
             </RelativeLayout>
@@ -321,19 +347,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:background="@color/primaryColor"
         android:layout_alignParentBottom="true">
 
         <!--button read-->
         <Button
             android:id="@+id/readBookBtn"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="READ"
             android:background="@color/primaryColor"
             android:textColor="@color/onSecondaryColor"
-            android:fontFamily="@font/poppinsbold"
+            android:fontFamily="@font/poppinssemibold"
             android:drawableTop="@drawable/ic_read"/>
+
+        <!-- button add/remove favorite -->
+        <Button
+            android:id="@+id/favoriteBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/ic_unfavorite"
+            android:text="Remove Favorite"
+            android:fontFamily="@font/poppinssemibold"
+            android:textColor="@color/onSecondaryColor"
+            android:background="@color/primaryColor"/>
 
         <!--button download-->
 <!--        <Button-->

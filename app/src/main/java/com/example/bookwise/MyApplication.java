@@ -19,6 +19,7 @@ import com.example.bookwise.adapters.AdapterPdfAdmin;
 import com.example.bookwise.models.ModelPdf;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -141,7 +142,7 @@ public class MyApplication extends Application {
                 });
     }
 
-    public static void loadPdfFromUrlSinglePage(String pdfUrl, String bookTitle, PDFView pdfView, ProgressBar progressBar) {
+    public static void loadPdfFromUrlSinglePage(String pdfUrl, String bookTitle, PDFView pdfView, ProgressBar progressBar, TextView pagesTv) {
         // Using URL to get the file and its metadata from Firebase Storage
         String TAG = "BOOK_LOAD_SINGLE_TAG";
 
@@ -149,7 +150,7 @@ public class MyApplication extends Application {
 
         ref.getBytes(MAX_BYTES_PDF)
                 .addOnSuccessListener(bytes -> {
-                    Log.d(TAG, "onSuccess: " +bookTitle + " Successfully got the file");
+                    Log.d(TAG, "onSuccess: " + bookTitle + " Successfully got the file");
 
                     // Save the PDF file to internal storage
                     String fileName = "temporary.pdf";
@@ -166,35 +167,33 @@ public class MyApplication extends Application {
                                 .onLoad(new OnLoadCompleteListener() {
                                     @Override
                                     public void loadComplete(int nbPages) {
-                                        //hide progress
+                                        // hide progress
                                         progressBar.setVisibility(View.INVISIBLE);
 
                                         // Handle load complete event if needed
-
                                         Log.d(TAG, "Load complete, number of pages: " + nbPages);
-                                    }
-                                })
-                                .onLoad(new OnLoadCompleteListener() {
-                                    @Override
-                                    public void loadComplete(int nbPages) {
-                                        //book loaded
-                                        //hide progress
-                                        progressBar.setVisibility(View.INVISIBLE);
-                                        Log.d(TAG, "loadComplete: Book Loaded...");
+
+                                        // if pagesTv param is not null then set page numbers
+                                        if (pagesTv != null) {
+                                            pagesTv.setText(String.valueOf(nbPages)); // concatenate with double quotes because can't set int in textview
+                                        }
                                     }
                                 })
                                 .load();
                     } catch (IOException e) {
                         e.printStackTrace();
-                        Log.d(TAG, "onSuccess: " + e.getMessage());
+                        progressBar.setVisibility(View.INVISIBLE);
+                        Log.d(TAG, "onSuccess: Exception while writing file: " + e.getMessage());
                     }
                 })
                 .addOnFailureListener(e -> {
-                    //hide progress
+                    // hide progress
                     progressBar.setVisibility(View.INVISIBLE);
                     Log.d(TAG, "onFailure: Failed getting file from URL due to " + e.getMessage());
                 });
     }
+
+
 
     public static void loadCategory(String categoryId, TextView categoryTv) {
         //get category using categoryId
@@ -359,4 +358,69 @@ public class MyApplication extends Application {
 //                    }
 //                });
 //    }
+
+    public static void addToFavorite(Context context, String bookId){
+        //we can add only if user is logged in
+        //1)check if user is logged in
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        if (firebaseAuth.getCurrentUser() == null){
+            //not logged in, cant add to fav
+            Toast.makeText(context, "You're Not Logged In", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            long timestamp = System.currentTimeMillis();
+
+            //setup data to add in firebase db of current user for favorite book
+            HashMap<String, Object> hashMap = new HashMap<>();
+            hashMap.put("bookId", "" + bookId);
+            hashMap.put("timestamp", "" + timestamp);
+
+            //save to db
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("user");
+            ref.child(firebaseAuth.getUid()).child("favorites").child(bookId)
+                    .setValue(hashMap)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(context, "Added to your Favorite list...", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(context, "Failed to add to your Favorite list due to " + e.getMessage() , Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+    }
+
+    public static void removeFromFavorite(Context context, String bookId){
+        //we can remove only if user is logged in
+        //1)check if user is logged in
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        if (firebaseAuth.getCurrentUser() == null){
+            //not logged in, cant remove from fav
+            Toast.makeText(context, "You're Not Logged In", Toast.LENGTH_SHORT).show();
+        }
+        else {
+
+            //remove from db
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("user");
+            ref.child(firebaseAuth.getUid()).child("favorites").child(bookId)
+                    .removeValue()
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(context, "Removed from your Favorite list...", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(context, "Failed to remove from your Favorite list due to " + e.getMessage() , Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+    }
+
 }

@@ -9,52 +9,38 @@ import java.util.ArrayList;
 
 public class FilterPdfUser extends Filter {
 
-    //array list in which to search
-    ArrayList<ModelPdf> filterList;
-    //adapter in which filter need to be implemented
-    AdapterPdfUser adapterPdfUser;
+    private ArrayList<ModelPdf> filterList;
+    private AdapterPdfUser adapter;
 
-    //contructor
-    public FilterPdfUser(ArrayList<ModelPdf> filterList, AdapterPdfUser adapterPdfUser) {
+    public FilterPdfUser(ArrayList<ModelPdf> filterList, AdapterPdfUser adapter) {
         this.filterList = filterList;
-        this.adapterPdfUser = adapterPdfUser;
+        this.adapter = adapter;
     }
 
     @Override
     protected FilterResults performFiltering(CharSequence constraint) {
         FilterResults results = new FilterResults();
-        //value to be searched should not be null/empty
-        if (constraint != null || constraint.length() > 0){
-            //not null or empty
-            //change to uppercase or lowercase to avoid case sensitivity
-            constraint = constraint.toString().toUpperCase();
+        if (constraint != null && constraint.length() > 0) {
+            constraint = constraint.toString().toLowerCase();
             ArrayList<ModelPdf> filteredModels = new ArrayList<>();
-
-            for (int i = 0; i < filterList.size(); i++){
-                //validate
-                if (filterList.get(i).getTitle().toUpperCase().contains(constraint)){
-                    //search matches, add to list
-                    filteredModels.add(filteredModels.get(i));
+            for (ModelPdf model : filterList) {
+                if (model.getTitle().toLowerCase().contains(constraint) ||
+                        model.getDescription().toLowerCase().contains(constraint)) {
+                    filteredModels.add(model);
                 }
             }
-
             results.count = filteredModels.size();
             results.values = filteredModels;
-        }
-        else {
-            //empty or null, make original list/result
+        } else {
             results.count = filterList.size();
             results.values = filterList;
         }
-        return results; //dont miss it
+        return results;
     }
 
     @Override
     protected void publishResults(CharSequence constraint, FilterResults results) {
-        //apply filter changes
-        adapterPdfUser.pdfArrayList = (ArrayList<ModelPdf>) results.values;
-
-        //notify
-        adapterPdfUser.notifyDataSetChanged();
+        adapter.pdfArrayList = (ArrayList<ModelPdf>) results.values;
+        adapter.notifyDataSetChanged();
     }
 }

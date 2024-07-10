@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -15,7 +16,9 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.bookwise.MyApplication;
+import com.example.bookwise.R;
 import com.example.bookwise.databinding.ActivityPdfDetailBinding;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,6 +32,10 @@ public class PdfDetailActivity extends AppCompatActivity {
 
     //pdf id, get from intent
     String bookId, bookTitle, bookUrl;
+
+    boolean isInMyFavorite = false;
+
+    private FirebaseAuth firebaseAuth;
 
     private static final String TAG_DOWNLOAD = "DOWNLOAD_TAG";
 
@@ -44,6 +51,11 @@ public class PdfDetailActivity extends AppCompatActivity {
 
         //at start hide download button, because we need book url that we will load later in function loadBookDetails();
 //        binding.downloadBookBtn.setVisibility(View.GONE);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        if (firebaseAuth.getCurrentUser() != null){
+            checkIsFavorite();
+        }
 
         loadBookDetails();
         //increment book view count, whenever this page
@@ -64,6 +76,26 @@ public class PdfDetailActivity extends AppCompatActivity {
                 Intent intent1 = new Intent(PdfDetailActivity.this, PdfViewActivity.class);
                 intent1.putExtra("bookId", bookId);
                 startActivity(intent1);
+            }
+        });
+
+        //handle click, add/remove favorite
+        binding.favoriteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (firebaseAuth.getCurrentUser() == null){
+                    Toast.makeText(PdfDetailActivity.this, "You're Not Logged in", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    if (isInMyFavorite){
+                        //in favorite, remove from favorite
+                        MyApplication.removeFromFavorite(PdfDetailActivity.this, bookId);
+                    }
+                    else {
+                        //not in favorite, add to favorite
+                        MyApplication.addToFavorite(PdfDetailActivity.this, bookId);
+                    }
+                }
             }
         });
 
@@ -130,7 +162,8 @@ public class PdfDetailActivity extends AppCompatActivity {
                                 ""+bookUrl,
                                 ""+bookTitle,
                                 binding.pdfView,
-                                binding.progressBar
+                                binding.progressBar,
+                                binding.pagesTv
                         );
                         MyApplication.loadPdfSize(
                                 ""+bookUrl,
@@ -148,6 +181,33 @@ public class PdfDetailActivity extends AppCompatActivity {
                         binding.downloadsTv.setText(downloadsCount.replace("null", "N/A"));
                         binding.dateTv.setText(date);
 
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+    }
+
+    private void checkIsFavorite(){
+        //logged in check if its in favorite list or not
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("user");
+        reference.child(firebaseAuth.getUid()).child("favorites").child(bookId)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        isInMyFavorite = snapshot.exists(); //true: if exist. false: if not exist
+                        if (isInMyFavorite){
+                            //exist in favorite
+                            binding.favoriteBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.ic_favorite,0,0);
+                            binding.favoriteBtn.setText("Remove Favorite");
+                        }
+                        else {
+                            //not exist in favorite
+                            binding.favoriteBtn.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.ic_unfavorite,0,0);
+                            binding.favoriteBtn.setText("Add Favorite");
+                        }
                     }
 
                     @Override
