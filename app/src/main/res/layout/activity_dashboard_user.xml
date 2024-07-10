@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/back01"
-    tools:context=".DashboardUserActivity">
+    tools:context=".activities.DashboardUserActivity">
 
     <!-- toolbar -->
     <RelativeLayout
@@ -28,6 +28,7 @@
             android:id="@+id/subTitleTv"
             android:layout_width="wrap_content"
             android:layout_marginBottom="5dp"
+            android:layout_marginTop="-5dp"
             android:layout_centerHorizontal="true"
             android:fontFamily="@font/poppinsmedium"
             android:layout_below="@id/titleTv"
@@ -58,15 +59,18 @@
         android:background="@color/transparent"
         app:tabBackground="@drawable/tab_selector"
         app:tabIndicatorFullWidth="false"
+        app:tabTextColor="@color/secondaryColor"
         app:tabIndicatorHeight="0dp"
         app:tabMode="scrollable"
-        app:tabUnboundedRipple="false"/>
+        app:tabUnboundedRipple="false"
+        android:contentDescription="tabLayout"/>
 
     <!-- viewPager: swipe/show/change fragments -->
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tabLayout"/>
+        android:layout_below="@id/tabLayout"
+        android:contentDescription="viewPager"/>
 
 </RelativeLayout>

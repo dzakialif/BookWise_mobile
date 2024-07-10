@@ -1,6 +1,5 @@
-package com.example.bookwise;
+package com.example.bookwise.activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
