@@ -16,7 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.bookwise.PdfListAdminActivity;
+import com.example.bookwise.activities.PdfListAdminActivity;
 import com.example.bookwise.filters.FilterCategory;
 import com.example.bookwise.models.ModelCategory;
 import com.example.bookwise.databinding.RowCategoryBinding;

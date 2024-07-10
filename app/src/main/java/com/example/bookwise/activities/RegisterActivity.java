@@ -1,6 +1,5 @@
-package com.example.bookwise;
+package com.example.bookwise.activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
@@ -20,8 +19,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
-import java.util.Objects;
-import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
 

@@ -1,8 +1,7 @@
-package com.example.bookwise;
+package com.example.bookwise.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatImageButton;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +10,6 @@ import android.text.TextWatcher;
 import android.view.View;
 
 import com.example.bookwise.adapters.AdapterCategory;
-import com.example.bookwise.databinding.ActivityDashboardAdminBinding;
 import com.example.bookwise.models.ModelCategory;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

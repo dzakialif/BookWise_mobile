@@ -5,6 +5,7 @@ import static com.example.bookwise.Constants.MAX_BYTES_PDF;
 import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.Environment;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
@@ -38,6 +39,8 @@ import java.util.Locale;
 
 //application class runs before your launcher activity
 public class MyApplication extends Application {
+
+    private static final String TAG_DOWNLOAD = "DOWNLOAD_TAG";
     @Override
     public void onCreate() {
         super.onCreate();
@@ -249,4 +252,113 @@ public class MyApplication extends Application {
                 });
     }
 
+    public static void downloadBook(Context context, String bookId, String bookTitle, String bookUrl){
+        Log.d(TAG_DOWNLOAD, "downloadBook: downloading book...");
+        String nameWithExtension = bookTitle + ".pdf";
+        Log.d(TAG_DOWNLOAD, "downloadBook: NAME : "+nameWithExtension);
+
+        //progress dialog
+        ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setTitle("Please Wait");
+        progressDialog.setMessage("Downloading "+ nameWithExtension + "...");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+
+        //download from firebase storage using url
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference(bookUrl);
+        storageReference.getBytes(MAX_BYTES_PDF)
+                .addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        Log.d(TAG_DOWNLOAD, "onSuccess: Book Downloaded");
+                        Log.d(TAG_DOWNLOAD, "onSuccess: Saving book...");
+                        saveDownloadedBook(context, progressDialog, bytes, nameWithExtension, bookId);
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG_DOWNLOAD, "onFailure: Failed to download due to "+e.getMessage());
+                        progressDialog.dismiss();
+                        Toast.makeText(context, "Failed to download due to"+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+    }
+
+    private static void saveDownloadedBook(Context context, ProgressDialog progressDialog, byte[] bytes, String nameWithExtension, String bookId) {
+        Log.d(TAG_DOWNLOAD, "saveDownloadedBook: Saving downloaded book");
+        try {
+            File downloadsFolder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+            downloadsFolder.mkdirs();
+
+            String filePath = downloadsFolder.getPath() + "/" + nameWithExtension;
+
+            FileOutputStream out = new FileOutputStream(filePath);
+            out.write(bytes);
+            out.close();
+
+            Toast.makeText(context, "Saved to Download Folder", Toast.LENGTH_SHORT).show();
+            Log.d(TAG_DOWNLOAD, "saveDownloadedBook: Saved to Download Folder");
+            progressDialog.dismiss();
+
+            incrementBookDownloadCount(bookId);
+        }
+        catch (Exception e){
+            Log.d(TAG_DOWNLOAD, "saveDownloadedBook: Failed saving to Download Folder due to "+e.getMessage());
+            Toast.makeText(context, "Failed saving to Download Folder due to "+e.getMessage(), Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
+
+        }
+    }
+
+    private static void incrementBookDownloadCount(String bookId) {
+        Log.d(TAG_DOWNLOAD, "incrementBookDownloadCount: Incrementing Book Download Count");
+
+        //Step 1 Get previous download count
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("book");
+        ref.child(bookId)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        String downloadsCount = ""+snapshot.child("downloadsCount").getValue();
+                        Log.d(TAG_DOWNLOAD, "onDataChange: Download Count: "+downloadsCount);
+
+                        if (downloadsCount.equals("") || downloadsCount.equals(null)){
+                            downloadsCount = "0";
+                        }
+
+                        //convert to long and increment 1
+                        long newDownloadsCount = Long.parseLong(downloadsCount) + 1;
+                        Log.d(TAG_DOWNLOAD, "onDataChange: New Download Count: "+newDownloadsCount);
+
+                        //setup data to update
+                        HashMap<String, Object> hashMap = new HashMap<>();
+                        hashMap.put("downloadsCount", newDownloadsCount);
+
+                        //Step 2
+                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("book");
+                        reference.child(bookId).updateChildren(hashMap)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Log.d(TAG_DOWNLOAD, "onSuccess: Download Count Updated...");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.d(TAG_DOWNLOAD, "onFailure: Failed to update Download Count due to"+e.getMessage());
+                                    }
+                                });
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+    }
 }
