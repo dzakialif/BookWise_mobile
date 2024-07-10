@@ -63,7 +63,7 @@ public class PdfDetailActivity extends AppCompatActivity {
                         String url = ""+snapshot.child("url").getValue();
                         String timestamp = ""+snapshot.child("timestamp").getValue();
 
-                        //formatdate
+                        //formatdatee
                         String date = MyApplication.formatTimestamp(Long.parseLong(timestamp));
 
                         MyApplication.loadCategory(
