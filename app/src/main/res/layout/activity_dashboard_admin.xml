@@ -14,6 +14,17 @@
         android:layout_height="?actionBarSize"
         android:background="@drawable/shape_toolbar2">
 
+        <!-- image button -->
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/favoriteBtn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_favorite"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="5dp"
+            android:background="@color/transparent"
+            android:contentDescription="fav"/>
+
         <TextView
             android:id="@+id/titleTv"
             android:layout_width="wrap_content"

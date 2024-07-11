@@ -57,15 +57,22 @@ public class DashboardUserActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 firebaseAuth.signOut();
-                checkUser();
+                startActivity(new Intent(DashboardUserActivity.this, MainActivity.class));
+                finish();
+            }
+        });
 
+        //handle click open favorite
+        binding.favoriteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DashboardUserActivity.this, FavoriteActivity.class));
             }
         });
     }
 
     private void setupViewPagerAdapter(ViewPager viewPager){
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, this);
-
         categoryArrayList = new ArrayList<>();
 
         //load categories from firebase
@@ -80,12 +87,10 @@ public class DashboardUserActivity extends AppCompatActivity {
                 //Add date to models
                 ModelCategory modelAll = new ModelCategory("01", "All", "", 1);
                 ModelCategory modelMostViewed = new ModelCategory("02", "Most Viewed", "", 1);
-                ModelCategory modelMostDownloaded = new ModelCategory("03", "Most Downloaded", "", 1);
 
                 //add models to list
                 categoryArrayList.add(modelAll);
                 categoryArrayList.add(modelMostViewed);
-                categoryArrayList.add(modelMostDownloaded);
 
                 //add data to view pager adapter
                 viewPagerAdapter.addFragment(BookUserFragment.newInstance(
@@ -98,11 +103,7 @@ public class DashboardUserActivity extends AppCompatActivity {
                         ""+modelMostViewed.getCategory(),
                         ""+modelMostViewed.getUid()
                 ), modelMostViewed.getCategory());
-                viewPagerAdapter.addFragment(BookUserFragment.newInstance(
-                        ""+modelMostDownloaded.getId(),
-                        ""+modelMostDownloaded.getCategory(),
-                        ""+modelMostDownloaded.getUid()
-                ), modelMostDownloaded.getCategory());
+
                 //refresh list
                 viewPagerAdapter.notifyDataSetChanged();
 
@@ -138,7 +139,7 @@ public class DashboardUserActivity extends AppCompatActivity {
         private ArrayList<String> fragmentTitleList = new ArrayList<>();
         private Context context;
 
-        public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior, Context context) {
+        public ViewPagerAdapter(FragmentManager fm, int behavior, Context context) {
             super(fm, behavior);
             this.context = context;
         }
@@ -149,23 +150,22 @@ public class DashboardUserActivity extends AppCompatActivity {
             return fragmentList.get(position);
         }
 
-
         @Override
         public int getCount() {
             return fragmentList.size();
         }
 
         private void addFragment(BookUserFragment fragment, String title){
-            //add fragment passed as parameter in fragmentList
+            //add fragment passed as parameter in fragmentlist
             fragmentList.add(fragment);
-            //add title passed as parameter in fragmentTitleList
+            //add title passed as parameter in fragmentTitlelist
             fragmentTitleList.add(title);
         }
 
-        @Nullable
         @Override
         public CharSequence getPageTitle(int position) {
             return fragmentTitleList.get(position);
+
         }
     }
 
@@ -173,9 +173,8 @@ public class DashboardUserActivity extends AppCompatActivity {
         //get current user
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         if (firebaseUser == null){
-            //not login go to main screen
-            startActivity(new Intent(this, MainActivity.class));
-            finish();
+            //not login go
+            binding.subTitleTv.setText("Not Logged in");
         }else {
             //login, get user info
             String email = firebaseUser.getEmail();

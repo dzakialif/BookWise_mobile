@@ -79,7 +79,7 @@ public class DashboardAdminActivity extends AppCompatActivity {
             }
         });
 
-        //handle click, start category add scren
+        //handle click, start category add screen
         binding.addCategoryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,6 +92,13 @@ public class DashboardAdminActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(DashboardAdminActivity.this, PdfAddActivity.class));
+            }
+        });
+
+        binding.favoriteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DashboardAdminActivity.this, FavoriteActivity.class));
             }
         });
 

@@ -13,14 +13,18 @@
         android:id="@+id/searchEt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:background="@color/white"
-        android:drawableStart="@drawable/ic_search"
+        android:layout_below="@id/toolbarRl"
         android:hint="Search"
+        android:layout_margin="10dp"
+        android:drawableStart="@drawable/ic_search"
+        android:drawablePadding="5dp"
         android:padding="10dp"
-        android:textColorHint="@color/onSecondaryColor"/>
+        android:background="@drawable/shape_button2"
+        android:textColorHint="@color/secondaryColor"
+        android:drawableTint="@color/primaryColor"
+        android:textColor="@color/secondaryColor"
+        android:minWidth="200dp"
+        android:minHeight="48dp"/>
 
 <!--    RecyclerView: Load Book-->
     <androidx.recyclerview.widget.RecyclerView
