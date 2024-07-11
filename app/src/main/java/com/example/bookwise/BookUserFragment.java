@@ -40,8 +40,8 @@ public class BookUserFragment extends Fragment {
     public static BookUserFragment newInstance(String id, String category, String uid) {
         BookUserFragment fragment = new BookUserFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_PARAM1, id);
+        args.putString(ARG_PARAM2, category);
         fragment.setArguments(args);
         return fragment;
     }

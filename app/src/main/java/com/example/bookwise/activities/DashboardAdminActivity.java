@@ -10,6 +10,7 @@ import android.text.TextWatcher;
 import android.view.View;
 
 import com.example.bookwise.adapters.AdapterCategory;
+import com.example.bookwise.databinding.ActivityDashboardAdminBinding;
 import com.example.bookwise.models.ModelCategory;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

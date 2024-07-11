@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.bookwise.MyApplication;
 import com.example.bookwise.activities.PdfDetailActivity;
 import com.example.bookwise.activities.PdfEditActivity;
+import com.example.bookwise.databinding.RowPdfAdminBinding;
 import com.example.bookwise.filters.FilterPdfAdmin;
 import com.example.bookwise.models.ModelPdf;
 import com.joanzapata.pdfview.PDFView;
